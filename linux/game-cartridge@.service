@@ -1,0 +1,8 @@
+[Unit]
+Description=Steam Game Cartridge (%i)
+After=dev-%i.device
+
+[Service]
+Type=oneshot
+User=__USERNAME__
+ExecStart=/usr/local/bin/script-launcher-helper %i
