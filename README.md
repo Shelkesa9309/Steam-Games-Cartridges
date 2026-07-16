@@ -9,7 +9,7 @@ Always be careful when executing scripts from removable storage. Only use cartri
 
 
 
-# Steam Game Cartridges
+# Steam Games Cartridges
 
 Physical game cartridges for your Steam library using 2.5" SATA SSDs.
 
@@ -28,7 +28,7 @@ git clone https://github.com/LewdM3at/Steam-Games-Cartridges.git
 ```
 Enter the project directory:
 ```bash
-cd Steam-Game-Cartridges
+cd Steam-Games-Cartridges
 ```
 Run the installer:
 ```bash
@@ -53,7 +53,7 @@ Or download the repo:
    
 Enter the project directory:
 ```bash
-cd Steam-Game-Cartridges
+cd Steam-Games-Cartridges
 ```
 Run the installer:
 ```bash
