@@ -43,18 +43,21 @@ sudo ./uninstall-linux.sh
 
 ### Windows
 
-Clone the repository:
-```bash
-git clone https://github.com/LewdM3at/Steam-Games-Cartridges.git
-```
-Or download the repo:
+Download the repo:
 1. Click Code → Download ZIP
 2. Extract it
    
-Enter the project directory:
+Open the extracted directory and keep going until you see this repo's files.
+
+Copy the folder's full path.
+
+Start Powershell as Administrator.
+
+Run:
 ```bash
-cd Steam-Games-Cartridges
+cd <paste the full path here>
 ```
+
 Run the installer:
 ```bash
 .\setup-windows.ps1
