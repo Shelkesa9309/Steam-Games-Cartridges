@@ -1,0 +1,131 @@
+# Steam Game Cartridge Monitor
+# Watches for inserted drives and launches launch.ps1 from cartridges.
+
+$InstallFolder = Join-Path $env:LOCALAPPDATA "SteamGameCartridge"
+$LogFile = Join-Path $InstallFolder "monitor.log"
+
+$DebounceSeconds = 5
+
+# Remember recently launched drives
+$LastLaunches = @{}
+
+function Write-Log {
+    param(
+        [string]$Message
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+
+    Add-Content `
+        -Path $LogFile `
+        -Value "[$timestamp] $Message"
+}
+
+
+Write-Log "Steam Game Cartridge monitor started."
+
+
+Register-WmiEvent `
+    -Class Win32_VolumeChangeEvent `
+    -SourceIdentifier "SteamGameCartridge" `
+    -Action {
+
+        $eventType = $Event.SourceEventArgs.NewEvent.EventType
+
+        # 2 = drive inserted
+        if ($eventType -ne 2) {
+            return
+        }
+
+
+        $drive = $Event.SourceEventArgs.NewEvent.DriveName
+
+
+        if ([string]::IsNullOrWhiteSpace($drive)) {
+            return
+        }
+
+
+        $launcher = Join-Path $drive "launch.ps1"
+
+
+        if (-not (Test-Path $launcher)) {
+            return
+        }
+
+
+        # Debounce
+        $now = Get-Date
+
+        if ($LastLaunches.ContainsKey($drive)) {
+
+            $elapsed = ($now - $LastLaunches[$drive]).TotalSeconds
+
+            if ($elapsed -lt $DebounceSeconds) {
+
+                Write-Log "Ignoring duplicate event for $drive"
+
+                return
+            }
+        }
+
+
+        $LastLaunches[$drive] = $now
+
+
+        Write-Log "Cartridge detected: $drive"
+
+
+        try {
+
+            Start-Process `
+                -FilePath "powershell.exe" `
+                -ArgumentList @(
+                    "-NoProfile",
+                    "-ExecutionPolicy", "Bypass",
+                    "-WindowStyle", "Hidden",
+                    "-File", "`"$launcher`""
+                ) `
+                -WindowStyle Hidden
+
+
+            Write-Log "Launched: $launcher"
+
+        }
+
+        catch {
+
+            Write-Log "Failed launching $launcher"
+            Write-Log $_.Exception.Message
+
+        }
+
+    }
+
+
+Write-Log "Event watcher registered."
+
+
+try {
+
+    while ($true) {
+
+        Wait-Event | Out-Null
+
+    }
+
+}
+
+finally {
+
+    Unregister-Event `
+        -SourceIdentifier "SteamGameCartridge"
+
+    Remove-Job `
+        -Name "SteamGameCartridge" `
+        -Force `
+        -ErrorAction SilentlyContinue
+
+    Write-Log "Monitor stopped."
+
+}
