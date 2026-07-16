@@ -11,6 +11,9 @@ Always be careful when executing scripts from removable storage. Only use cartri
 
 # Steam Games Cartridges
 
+<img width="970" height="546" alt="JTDUMcuDBav3BEspNBMw6A-970-80 jpg" src="https://github.com/user-attachments/assets/8c0a8d2b-ce5a-4aa5-9bac-5805016db31f" />
+
+<br/><br/>
 Physical game cartridges for your Steam library using 2.5" SATA SSDs.
 
 Turn your digital Steam games into something that feels physical: insert a cartridge, and your PC automatically detects it and launches the configured game or action.
