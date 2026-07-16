@@ -24,7 +24,7 @@ Launching a Steam game, opening a game's details page, or running a custom comma
 Clone the repository:
 
 ```bash
-git clone https://github.com/LewdM3at/Steam-Game-Cartridge-old.git
+git clone https://github.com/LewdM3at/Steam-Game-Cartridge.git
 ```
 Enter the project directory:
 ```bash
@@ -45,7 +45,7 @@ sudo ./uninstall-linux.sh
 
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Steam-Game-Cartridges.git
+git clone https://github.com/LewdM3at/Steam-Game-Cartridge.git
 ```
 Or download the repo:
 1. Click Code → Download ZIP
