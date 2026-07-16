@@ -18,6 +18,9 @@ Turn your digital Steam games into something that feels physical: insert a cartr
 Each cartridge is a simple storage device containing a small launcher script. When inserted, the system detects the cartridge and executes the script file the drive. 
 Launching a Steam game, opening a game's details page, or running a custom command.
 
+## 3D-Print Files
+STEP-Files are available over at MakerWorld: maker-world-url-here
+
 ## Quickstart
 ### Linux
 
