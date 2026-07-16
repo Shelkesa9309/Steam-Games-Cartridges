@@ -22,7 +22,7 @@ Each cartridge is a simple storage device containing a small launcher script. Wh
 Launching a Steam game, opening a game's details page, or running a custom command.
 
 ## 3D-Print Files
-STEP-Files are available over at MakerWorld: maker-world-url-here
+STEP-Files are available over at MakerWorld: [MakerWorld](https://makerworld.com/en/models/3057977-2-5-ssd-dock-cartridge-system#profileId-3440827)
 
 ## Quickstart
 ### Linux
