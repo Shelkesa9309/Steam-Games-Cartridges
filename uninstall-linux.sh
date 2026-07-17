@@ -49,6 +49,22 @@ echo "Removing udev rule..."
 
 rm -f /etc/udev/rules.d/99-game-cartridge.rules
 
+#######################################################################
+# Remove steam-games-cartridges config directory in User's HOME
+#######################################################################
+
+if [ -n "$SUDO_USER" ]; then
+    USERNAME="$SUDO_USER"
+else
+    USERNAME="$USER"
+fi
+
+USER_HOME=$(eval echo "~$USERNAME")
+
+echo "Removing config directory..."
+
+rm -rf "$USER_HOME/.config/steam-games-cartridges"
+
 
 ########################################
 # Reload services
