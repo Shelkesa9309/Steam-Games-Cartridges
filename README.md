@@ -4,8 +4,6 @@ This project is a hobby experiment and is not an official Steam product.
 
 Automatic launching depends on your operating system settings and security policies. Some systems may require additional configuration for automounting drives or allowing scripts to run automatically.
 
-Always be careful when executing scripts from removable storage. Only use cartridges you trust. <br>
-**!!! Anyone with physical access to your PC can create a launch script on their drive and plug it in and it WILL be executed !!!**
 
 
 
@@ -42,6 +40,13 @@ sudo ./setup-linux.sh
 ```
 The installer will install the required udev rule, systemd service, and launcher helper.
 
+After you have created a Cartridge with the launch.sh script, add the script to trusted-scripts with:
+```bash
+./trust-script-linux.sh
+```
+Any script that hasn't been trusted through this process **will NOT be automatically executed**
+! If you modify the script later on, you have to re-add it to trusted scripts again.
+
 To remove the installation:
 ```bash
 sudo ./uninstall-linux.sh
@@ -75,6 +80,13 @@ If PowerShell blocks script execution, run:
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 and run the installer again.
+
+After you have created a Cartridge with the launch.ps1 script, add the script to trusted-scripts with:
+```bash
+.\trust-script-windows.ps1
+```
+Any script that hasn't been trusted through this process **will NOT be automatically executed**
+ If you modify the script later on, you have to re-add it to trusted scripts again.
 
 To remove the installation:
 ```bash
