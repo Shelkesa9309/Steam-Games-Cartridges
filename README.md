@@ -127,7 +127,8 @@ The service starts the launcher helper and passes the detected device name.<br>
 
 - **cartridge-launcher-helper**<br>
 The helper script waits for the desktop environment to mount the drive, then searches the cartridge at rool level for: `launch.sh` <br>
-If found, it executes the script.<br>
+If found, it checks the SHA256 sums of said script against the stored trusted-scripts file. <br>
+If the SHA256 matches, it executes the script.<br>
 Example cartridge:<br>
 SSD<br>
 └── launch.sh<br>
@@ -147,7 +148,8 @@ The task keeps the monitor running silently in the background.<br>
 - **cartridge-monitor.ps1**<br>
 The PowerShell monitor watches for newly inserted storage devices.<br>
 When a new drive is detected, it checks the root of the cartridge for: `launch.ps1` <br>
-If found, it executes the script.<br>
+If found, it checks the SHA256 sums of said script against the stored trusted-scripts file. <br>
+If the SHA256 matches, it executes the script.<br>
 Example cartridge:<br>
 SSD<br>
 └── launch.ps1<br>
