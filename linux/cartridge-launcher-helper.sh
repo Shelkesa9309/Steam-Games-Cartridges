@@ -4,6 +4,9 @@ set -e
 
 DEVICE="$1"
 
+TRUST_DIR="$HOME/.config/steam-games-cartridges"
+TRUST_FILE="$TRUST_DIR/trusted_scripts.sha256"
+
 echo "Game cartridge detected: $DEVICE"
 
 
@@ -32,16 +35,45 @@ fi
 echo "Mounted at: $MOUNT_POINT"
 
 
-if [ -f "$MOUNT_POINT/launch.sh" ]; then
+SCRIPT="$MOUNT_POINT/launch.sh"
 
+
+if [ ! -f "$SCRIPT" ]; then
+    echo "No launch.sh found on cartridge"
+    exit 0
+fi
+
+
+echo "Found launch.sh"
+
+
+# Check trusted scripts database exists
+if [ ! -f "$TRUST_FILE" ]; then
+    echo "No trusted scripts database found."
+    echo "Cartridge blocked."
+    exit 0
+fi
+
+
+# Calculate hash
+SCRIPT_HASH=$(sha256sum "$SCRIPT" | awk '{print $1}')
+
+echo "Script SHA256:"
+echo "$SCRIPT_HASH"
+
+
+# Check trust database
+if grep -qx "$SCRIPT_HASH" "$TRUST_FILE"; then
+
+    echo "Script is trusted."
     echo "Launching cartridge..."
 
-    chmod +x "$MOUNT_POINT/launch.sh"
-
-    bash "$MOUNT_POINT/launch.sh"
+    chmod +x "$SCRIPT"
+    bash "$SCRIPT"
 
 else
 
-    echo "No launch.sh found on cartridge"
+    echo "Script is NOT trusted."
+    echo "Cartridge blocked."
 
 fi
