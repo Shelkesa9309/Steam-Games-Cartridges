@@ -16,7 +16,7 @@ Physical game cartridges for your Steam library using 2.5" SATA SSDs.
 
 Turn your digital Steam games into something that feels physical: insert a cartridge, and your PC automatically detects it and launches the configured game or action.
 
-Each cartridge is a simple storage device containing a small launcher script. When inserted, the system detects the cartridge and executes the script file the drive. 
+Each cartridge is a simple storage device containing a small launcher script. When inserted, the system detects the cartridge and executes the script file on the drive if it has been classified "trusted". 
 Launching a Steam game, opening a game's details page, or running a custom command.
 
 ## 3D-Print Files
