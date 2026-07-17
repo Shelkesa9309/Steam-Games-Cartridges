@@ -1,13 +1,25 @@
 # Steam Game Cartridge Monitor
-# Watches for inserted drives and launches launch.ps1 from cartridges.
+# Watches for inserted drives and launches trusted launch.ps1 cartridges.
 
 $InstallFolder = Join-Path $env:LOCALAPPDATA "SteamGameCartridge"
+
 $LogFile = Join-Path $InstallFolder "monitor.log"
+$TrustFile = Join-Path $InstallFolder "trusted_scripts.sha256"
 
 $DebounceSeconds = 5
 
-# Remember recently launched drives
+
+if (-not (Test-Path $InstallFolder)) {
+    New-Item -ItemType Directory -Path $InstallFolder -Force | Out-Null
+}
+
+if (-not (Test-Path $TrustFile)) {
+    New-Item -ItemType File -Path $TrustFile -Force | Out-Null
+}
+
+
 $LastLaunches = @{}
+
 
 function Write-Log {
     param(
@@ -22,6 +34,32 @@ function Write-Log {
 }
 
 
+function Get-FileHashSHA256 {
+    param(
+        [string]$Path
+    )
+
+    return (Get-FileHash `
+        -Path $Path `
+        -Algorithm SHA256).Hash.ToLower()
+}
+
+
+function Is-TrustedScript {
+    param(
+        [string]$Hash
+    )
+
+    if (-not (Test-Path $TrustFile)) {
+        return $false
+    }
+
+    $TrustedHashes = Get-Content $TrustFile
+
+    return $TrustedHashes -contains $Hash
+}
+
+
 Write-Log "Steam Game Cartridge monitor started."
 
 
@@ -30,7 +68,9 @@ Register-WmiEvent `
     -SourceIdentifier "SteamGameCartridge" `
     -Action {
 
+
         $eventType = $Event.SourceEventArgs.NewEvent.EventType
+
 
         # 2 = drive inserted
         if ($eventType -ne 2) {
@@ -57,6 +97,7 @@ Register-WmiEvent `
         # Debounce
         $now = Get-Date
 
+
         if ($LastLaunches.ContainsKey($drive)) {
 
             $elapsed = ($now - $LastLaunches[$drive]).TotalSeconds
@@ -77,6 +118,23 @@ Register-WmiEvent `
 
 
         try {
+
+            $hash = Get-FileHashSHA256 $launcher
+
+
+            Write-Log "SHA256: $hash"
+
+
+            if (-not (Is-TrustedScript $hash)) {
+
+                Write-Log "Blocked untrusted cartridge."
+
+                return
+            }
+
+
+            Write-Log "Trusted cartridge."
+
 
             Start-Process `
                 -FilePath "powershell.exe" `
@@ -119,7 +177,8 @@ try {
 finally {
 
     Unregister-Event `
-        -SourceIdentifier "SteamGameCartridge"
+        -SourceIdentifier "SteamGameCartridge" `
+        -ErrorAction SilentlyContinue
 
     Remove-Job `
         -Name "SteamGameCartridge" `
