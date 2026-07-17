@@ -128,6 +128,7 @@ else {
         -Value $Hash
 
     Write-Host "Added to trusted scripts."
+    Write-Host "If you modify the script later, you will need to run this script again to trust the new version."
     Write-Host "Now the script will be executed automatically when you reconnect the Cartridge."
 
 }

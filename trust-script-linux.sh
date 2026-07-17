@@ -60,6 +60,7 @@ case "$CONFIRM" in
         else
             echo "$HASH" >> "$TRUST_FILE"
             echo "Added to trusted scripts."
+            echo "If you modify the script later, you will need to run this script again to trust the new version."
             echo "Now the script will be executed automatically when you reconnect the Cartridge."
         fi
 
